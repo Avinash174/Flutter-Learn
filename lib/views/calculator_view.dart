@@ -1,8 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CalculatorView extends StatelessWidget {
+class CalculatorView extends StatefulWidget {
   const CalculatorView({super.key});
+
+  @override
+  State<CalculatorView> createState() => _CalculatorViewState();
+}
+
+class _CalculatorViewState extends State<CalculatorView> {
+  int x = 0;
+  int y = 0;
+  num z = 0;
+  final displayone = TextEditingController();
+  final displatTwo = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    displayone.text = x.toString();
+    displatTwo.text = y.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,21 +28,23 @@ class CalculatorView extends StatelessWidget {
       padding: const EdgeInsets.all(32.0),
       child: Column(
         children: [
-          const DisplayTextFiels(
+          DisplayTextFiels(
             hint: 'Enter First Number',
+            controller: displayone,
           ),
           const SizedBox(
             height: 25,
           ),
-          const DisplayTextFiels(
+          DisplayTextFiels(
             hint: 'Enter Second Number',
+            controller: displatTwo,
           ),
           const SizedBox(
             height: 45,
           ),
-          const Text(
-            '0',
-            style: TextStyle(
+          Text(
+            z.toString(),
+            style: const TextStyle(
               fontSize: 40,
               color: Colors.white,
             ),
@@ -34,31 +54,65 @@ class CalculatorView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    z = num.tryParse(displayone.text)! +
+                        num.tryParse(displatTwo.text)!;
+                  });
+                },
                 child: const Icon(
                   CupertinoIcons.add,
                 ),
               ),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    z = num.tryParse(displayone.text)! -
+                        num.tryParse(displatTwo.text)!;
+                  });
+                },
                 child: const Icon(
                   CupertinoIcons.minus,
                 ),
               ),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    z = num.tryParse(displayone.text)! *
+                        num.tryParse(displatTwo.text)!;
+                  });
+                },
                 child: const Icon(
                   CupertinoIcons.multiply,
                 ),
               ),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    z = num.tryParse(displayone.text)! /
+                        num.tryParse(displatTwo.text)!;
+                  });
+                },
                 child: const Icon(
                   CupertinoIcons.divide,
                 ),
               ),
             ],
-          )
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          FloatingActionButton.extended(
+              onPressed: () {
+                setState(() {
+                  x = 0;
+                  y = 0;
+                  z = 0;
+                  displayone.clear();
+                  displatTwo.clear();
+                });
+              },
+              label: const Text('Clear')),
         ],
       ),
     );
@@ -67,14 +121,17 @@ class CalculatorView extends StatelessWidget {
 
 class DisplayTextFiels extends StatelessWidget {
   final String? hint;
+  final TextEditingController controller;
   const DisplayTextFiels({
     super.key,
     required this.hint,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       autofocus: true,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(

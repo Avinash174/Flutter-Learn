@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_learn/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,6 +7,7 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     expect(find.byType(Container), findsWidgets);
-    expect(find.text('data'), findsWidgets);
+
+    expect(find.byIcon(CupertinoIcons.add), findsWidgets);
   });
 }
