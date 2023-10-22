@@ -3,7 +3,7 @@ import 'package:flutter_learn/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets("Hello World Test", (WidgetTester tester) async {
+  testWidgets("Calculator View Test", (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
     expect(find.byType(Container), findsWidgets);
