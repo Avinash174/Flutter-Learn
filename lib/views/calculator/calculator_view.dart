@@ -43,8 +43,6 @@ class _CalculatorViewState extends State<CalculatorView> {
   void _onDetach() => log('onDetach Called');
   void _onPause() => log('onPause Called');
   void _onRestart() => log('onRestart Called');
-  void _onStart() => log('onStart Called');
-  void _onStop() => log('onStop Called');
   void _onStateChange(AppLifecycleState state) => log("onStateChanged called with state:$state");
 
   @override
