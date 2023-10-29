@@ -1,16 +1,18 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class IceCreamView extends StatelessWidget {
   const IceCreamView({super.key});
 
-  Future<void> loadIcecream() async {
+  Future<Map<String, dynamic>> loadIcecream() async {
     final rawIcecream = await rootBundle.loadString("assets/icecreams.json");
-    final decodeIcecream = jsonDecode(rawIcecream);
     await Future.delayed(const Duration(seconds: 1));
-    log(decodeIcecream.toString());
+    final decodeIcecream = jsonDecode(rawIcecream);
+    return decodeIcecream;
+
+    // log(decodeIcecream.toString());
   }
 
   @override
