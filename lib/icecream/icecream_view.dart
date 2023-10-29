@@ -4,28 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class IceCreamView extends StatefulWidget {
-  const IceCreamView({super.key});
-
-  @override
-  State<IceCreamView> createState() => _IceCreamViewState();
-}
-
-class _IceCreamViewState extends State<IceCreamView> {
-  Map<String, dynamic>? decodeIcecream;
-
-  @override
-  void initState() {
-    super.initState();
-    loadIcecream();
-  }
-
+class IceCreamView extends StatelessWidget {
   Future<void> loadIcecream() async {
     final rawIcecream = await rootBundle.loadString("assets/icecreams.json");
-    final decodeIcecreams = jsonDecode(rawIcecream);
+    final decodeIcecream = jsonDecode(rawIcecream);
     await Future.delayed(const Duration(seconds: 1));
-    log(decodeIcecreams.toString());
-    setState(() {});
+    log(decodeIcecream.toString());
   }
 
   @override
@@ -36,7 +20,7 @@ class _IceCreamViewState extends State<IceCreamView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Icecream',
+            'Icecreams',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -46,10 +30,28 @@ class _IceCreamViewState extends State<IceCreamView> {
             'We have something yummy for you',
             style: Theme.of(context).textTheme.bodySmall!,
           ),
-          if (decodeIcecream != null)
-            const Text('Icecreams Loaded')
-          else
-            const Center(child: CircularProgressIndicator.adaptive()),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FutureBuilder(
+                  future: loadIcecream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return const Center(
+                        child: Text("Icecreams Loaded"),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
