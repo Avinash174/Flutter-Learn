@@ -22,9 +22,9 @@ class _IceCreamViewState extends State<IceCreamView> {
 
   Future<void> loadIcecream() async {
     final rawIcecream = await rootBundle.loadString("assets/icecreams.json");
-    final decodeIcecream = jsonDecode(rawIcecream);
+    final decodeIcecreams = jsonDecode(rawIcecream);
     await Future.delayed(const Duration(seconds: 1));
-    log(decodeIcecream.toString());
+    log(decodeIcecreams.toString());
     setState(() {});
   }
 
