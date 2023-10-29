@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class IceCreamView extends StatelessWidget {
+  const IceCreamView({super.key});
+
   Future<void> loadIcecream() async {
     final rawIcecream = await rootBundle.loadString("assets/icecreams.json");
     final decodeIcecream = jsonDecode(rawIcecream);
